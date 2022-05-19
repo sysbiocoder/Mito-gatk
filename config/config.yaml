@@ -1,0 +1,5 @@
+indir: inputdir
+outdir: outputdir
+genome: testdata
+mcid: "Machineid"
+samplescount: 3 
