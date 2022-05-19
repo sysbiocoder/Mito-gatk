@@ -2,5 +2,5 @@
 indir: inputdir
 outdir: outputdir
 genome: testdata
-mcid: "Machineid"
+mcid: "Machineid" # Required to automatically fetch the sample location created from Nextseq run
 samplescount: 3  # No of samples
