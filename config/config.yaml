@@ -1,5 +1,6 @@
+# This config file is made according to Nextseq run and to be standardized based on other sequencers
 indir: inputdir
 outdir: outputdir
 genome: testdata
 mcid: "Machineid"
-samplescount: 3 
+samplescount: 3  # No of samples
