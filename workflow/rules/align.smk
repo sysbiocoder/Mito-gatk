@@ -2,8 +2,8 @@ from pathlib import Path
 rule bwa_mem:
 	input:
 		idx=config['genome']+'/hg38.fa',
-		sam1 =[config['indir']+'/{samplefolder}/HHHCKDSX2_{sample}_{run}_L004_R1_001.fastq.gz'.format(mcid=mc_id, samplefolder=samplefolder_id, sample=sample_id, run=run_id) for mc_id,samplefolder_id, sample_id, run_id in zip(mcids,samplefolder_ids, sample_ids, run_ids)],
-		sam2 =[config['indir']+'/{samplefolder}/HHHCKDSX2_{sample}_{run}_L004_R2_001.fastq.gz'.format(mcid=mc_id, samplefolder=samplefolder_id, sample=sample_id, run=run_id) for mc_id,samplefolder_id, sample_id, run_id in zip(mcids,samplefolder_ids, sample_ids, run_ids)]
+		sam1 =[config['indir']+'/{samplefolder}/'+config['mcid']+'_{sample}_{run}_L004_R1_001.fastq.gz'.format(mcid=mc_id, samplefolder=samplefolder_id, sample=sample_id, run=run_id) for mc_id,samplefolder_id, sample_id, run_id in zip(mcids,samplefolder_ids, sample_ids, run_ids)],
+		sam2 =[config['indir']+'/{samplefolder}/'+config['mcid']+'_{sample}_{run}_L004_R2_001.fastq.gz'.format(mcid=mc_id, samplefolder=samplefolder_id, sample=sample_id, run=run_id) for mc_id,samplefolder_id, sample_id, run_id in zip(mcids,samplefolder_ids, sample_ids, run_ids)]
 	output:
 		out1=[config['outdir']+'/align/{sample}.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids],
 		out2=[config['outdir']+'/align/{sample}.sorted.bam.bai'.format(sample=sample_id) for sample_id in sample_ids]
