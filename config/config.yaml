@@ -1,0 +1,6 @@
+# This config file is made according to Nextseq run and to be standardized based on other sequencers
+ indir: testdata # 
+ outdir:  testout # 
+ genome: repositories
+ mcid: 'HHHCKDSX2' # Required to automatically fetch the sample location created from Nextseq run
+ samplescount: 1  # No of samples
