@@ -11,7 +11,7 @@ rule bwa_mem:
 	log:
 		expand(config['outdir']+'/align/{sample}.log',sample=sample_ids)
 	params:
-		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:WES",sample=sample_ids)
+		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:{library}",sample=sample_ids)
 
 	threads: 40
 	run:
