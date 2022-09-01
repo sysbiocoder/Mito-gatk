@@ -6,7 +6,7 @@ rule bwa_refmt:
 	output:
 		out1=[config['outdir']+'/align/{sample}_mt_ref.bam'.format(sample=sample_id) for sample_id in sample_ids]
 	params:
-		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:WES",sample=sample_ids)
+		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:{library}",sample=sample_ids)
 	threads: 32
 	run:
 		for i in range(cnt):
