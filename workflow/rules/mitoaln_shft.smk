@@ -7,7 +7,7 @@ rule bwa_shiftmt:
 	output:
 		out1=[config['outdir']+'/align/{sample}_mt_shift.bam'.format(sample=sample_id) for sample_id in sample_ids]
 	params:
-		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:WES",sample=sample_ids)
+		rg=expand("@RG\\tID:{sample}\\tPL:ILLUMINA\\tSM:{sample}\\tLB:{library}",sample=sample_ids)
 	run:
 		for i in range(cnt):
 			input.samp1=input.sam1[i]
