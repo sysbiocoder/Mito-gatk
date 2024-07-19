@@ -1,9 +1,37 @@
-configfile: "../config/config.yaml"
+##############################
+# common.smk
+#
+# Collection of code common to all parts of the workflow
+##############################
+#from snakemake.utils import validate
+import pandas as pd
 import os
-import glob
-samplefolder_ids,sample_ids, run_ids = glob_wildcards(config['indir']+"/{samplefolder}/"+config['mcid']+"_{sample}_{run}_L004_R1_001.fastq.gz")
-print(sample_ids)
-print(samplefolder_ids)
-cnt=config['samplescount']
-mcids=config['mcid']
-print(mcids)
+
+
+# this container defines the underlying OS for each job when using the workflow
+# with --use-conda --use-singularity
+container: "docker://continuumio/miniconda3"
+
+##### load config and sample sheets #####
+configfile: "config/config.yaml"
+
+#validate(config, schema="../schemas/config.schema.yaml")
+samples = pd.read_csv(config["samples"], sep="\t").set_index("sample", drop=False)
+samples.index.names = ["sample_id"]
+
+
+# Load reads
+
+#validate(reads, schema="../schemas/reads.schema.yaml")
+reads = pd.read_csv(config["reads"], sep="\t").set_index("sample", drop=False)
+reads.index.names = ["sample_id"]
+
+
+##### Global wildcard constraints: valid in all rules #####
+#wildcard_constraints:
+#    sample="({})".format("|".join(samples.index)),
+#    unit="({})".format("|".join(reads.unit.drop_duplicates().values))
+
+##############################
+# Utility functions
+##############################

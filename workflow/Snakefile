@@ -1,4 +1,17 @@
 include: "rules/common.smk"
+include: "rules/inputfunctions.smk"
+
+rule all:
+    input:
+        unpack(all)
+
+
+# Pseudo-target using expand
+rule all_qc:
+    input:
+        all_qc_fastqc
+
+"""
 rule all:
 	input:
 		[config['outdir']+'/align/{sample}.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids],
@@ -25,22 +38,25 @@ rule all:
 		[config['outdir']+'/variants/{sample}_mtmerged_filtered.vcf'.format(sample=sample_id) for sample_id in sample_ids],
 		[config['outdir']+'/variants/{sample}_mtmerged_filtered_brm.vcf'.format(sample=sample_id) for sample_id in sample_ids],
 		[config['outdir']+'/variants/{sample}_mtmerged_combined_brm_annotated.vcf'.format(sample=sample_id) for sample_id in sample_ids]
+"""
+
 include: "rules/qc.smk"
-include: "rules/align.smk"
-include: "rules/prnrd.smk"
-include: "rules/revertsam.smk"
-include: "rules/samtofq.smk"
-include: "rules/mitoaln.smk"
-include: "rules/mitoaln_shft.smk"
-include: "rules/mergmt_ref.smk"
-include: "rules/mergmt_shft.smk"
-include: "rules/rdup_ref.smk"
-include: "rules/rdup_shf.smk"
-include: "rules/haplo.smk"
-include: "rules/mutek_ref.smk"
-include: "rules/mutek_shf.smk"
-include: "rules/lift.smk"
-include: "rules/mergevcf.smk"
-include: "rules/filter.smk"
-include: "rules/blacklist.smk"
-include: "rules/annot.smk"
+
+# include: "rules/align.smk"
+# include: "rules/prnrd.smk"
+# include: "rules/revertsam.smk"
+# include: "rules/samtofq.smk"
+# include: "rules/mitoaln.smk"
+# include: "rules/mitoaln_shft.smk"
+# include: "rules/mergmt_ref.smk"
+# include: "rules/mergmt_shft.smk"
+# include: "rules/rdup_ref.smk"
+# include: "rules/rdup_shf.smk"
+# include: "rules/haplo.smk"
+# include: "rules/mutek_ref.smk"
+# include: "rules/mutek_shf.smk"
+# include: "rules/lift.smk"
+# include: "rules/mergevcf.smk"
+# include: "rules/filter.smk"
+# include: "rules/blacklist.smk"
+# include: "rules/annot.smk"
