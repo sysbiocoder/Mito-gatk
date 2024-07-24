@@ -1,5 +1,20 @@
 samples: "config/test_samples.tsv"
 reads: "config/test_reads.tsv"
 
+ref: "resources/mm39/GCF_000001635.27_GRCm39_genomic.fna"
+mt_chrom_name: "NC_005089.1"
+mt_ref: "resources/mm39/chrMT.fna"
+mt_shft_ref: "resources/mm39/chrMT_shifted_8000bp.fna"
+mt_back_chain: "resources/mm39/chrMT_shifted_8000bp.back_chain"
+
+bwa: 
+  threads: 40
+
 fastqc:
   threads: 8
+
+gatk:
+  threads: 32 
+
+picard: 
+  threads: 32
