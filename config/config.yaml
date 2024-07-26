@@ -1,20 +1,30 @@
-samples: "config/test_samples.tsv"
 reads: "config/test_reads.tsv"
+samples: "config/test_samples.tsv"
 
-ref: "resources/mm39/GCF_000001635.27_GRCm39_genomic.fna"
+### GRCm39 ### 
+ref: "resources/mm39/GCF_000001635_27_GRCm39_genomic.fna"
 mt_chrom_name: "NC_005089.1"
 mt_ref: "resources/mm39/chrMT.fna"
 mt_shft_ref: "resources/mm39/chrMT_shifted_8000bp.fna"
 mt_back_chain: "resources/mm39/chrMT_shifted_8000bp.back_chain"
+mt_shft_control_region: "resources/mm39/control_region_chrMT_shifted_8000bp.txt"
+mt_non_control_region: "resources/mm39/non_control_region_chrMT.txt"
 
 bwa: 
   threads: 40
 
 fastqc:
+  mem_mb: 1024
   threads: 8
 
 gatk:
-  threads: 32 
-
-picard: 
   threads: 32
+  sif: "singularity/gatk.sif" 
+
+picard:
+  mem_mb: 1024 
+  threads: 32
+
+samtools: 
+  threads: 8
+
