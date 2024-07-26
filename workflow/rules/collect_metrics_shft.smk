@@ -1,10 +1,10 @@
 rule collect_wgs_metrics_shft:
-	output:
-        metrics="result/dedup/{sample}_merged_mtshft_markdups_wgs_metrics.txt"
+    output:
+        metrics="results/dedup/{sample}_merged_mtshft_mkdups_wgs_metrics.txt"
     input:
-        bam="results/dedup/{sample}_merged_mtshft_markdups.bam",
+        bam="results/dedup/{sample}_merged_mtshft_mkdups.bam",
         fasta=config["mt_shft_ref"]
-    container: config["picard"]["sif"]
+    container: config["picard"]["container"]
     log:
         "logs/{sample}.wgs.metrics.shft.log"
     threads: config["picard"]["threads"]

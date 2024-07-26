@@ -1,9 +1,9 @@
 rule dup_ref:
     output:
-        bam="result/dedup/{sample}_merged_mtref_markdups.bam",
-        metrics="result/dedup/{sample}_merged_mtref_markdups_metrics.txt"
+        bam="results/dedup/{sample}_merged_mtref_mkdups.bam",
+        metrics="results/dedup/{sample}_merged_mtref_mkdups_metrics.txt"
     input:
-        bam="result/align/{sample}_merged_mtref.bam"
+        bam="results/align/{sample}_merged_mtref.bam"
     log:
         "logs/{sample}.ref.mkdups.log"
     threads: config["picard"]["threads"]

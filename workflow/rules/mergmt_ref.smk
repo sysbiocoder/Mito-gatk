@@ -1,11 +1,11 @@
 rule bwa_refmtmerge:
-	output:
-        out="result/align/{sample}_merged_mtref.bam"
+    output:
+        out="results/align/{sample}_merged_mtref.bam"
     input:
         bam1="results/align/{sample}.mito.reverted.bam",
         bam2="results/align/{sample}_mt_ref.bam",
         fasta=config['mt_ref']
-    container: config["picard"]["sif"]
+    container: config["picard"]["container"]
     log:
         "logs/{sample}_mt_ref_merge.log"
     shell:

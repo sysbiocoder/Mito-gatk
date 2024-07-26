@@ -1,10 +1,10 @@
 rule mutect_shft:
     input:
         fasta=config["mt_shft_ref"],
-        map="result/dedup/{sample}_merged_mtshft_markdups.bam",
+        map="results/dedup/{sample}_merged_mtshft_mkdups.bam",
         intervals=config["mt_shft_control_region"]
     output:
-        vcf="results/variants/{sample}_merged_mtshft_markdups.vcf",
+        vcf="results/variants/{sample}_merged_mtshft_mkdups.vcf",
     message:
         "Testing Mutect2 with {wildcards.sample}"
     threads: config["gatk"]["threads"]

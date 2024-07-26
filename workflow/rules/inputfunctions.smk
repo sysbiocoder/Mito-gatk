@@ -49,22 +49,22 @@ def all_revertsam_bam_output(wildcards):
     return files
 
 def all_mitoaln_bam_ref(wildcards):
-    fn = "results/align/{sample}_mt_ref.bam"
+    fn = "results/align/{}_mt_ref.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
 def all_mitoaln_bam_shft(wildcards):
-    fn = "results/align/{sample}_mt_shft.bam"
+    fn = "results/align/{}_mt_shft.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
 def all_merged_bam_ref(wildcards):
-    fn = "result/align/{sample}_merged_mtref.bam"
+    fn = "results/align/{}_merged_mtref.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
 def all_merged_bam_shft(wildcards):
-    fn = "result/align/{sample}_merged_mtshft.bam"
+    fn = "results/align/{}_merged_mtshft.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
@@ -81,17 +81,49 @@ def all_samtofq_output(wildcards):
         "fq2": [base_fn.format(sample, 2) for sample in reads.index]
     }
 
+def all_rdup_ref(wildcards):
+    fn = "results/dedup/{}_merged_mtref_mkdups.bam"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
 
-def all_bam(wildcards):
+def all_rdup_shft(wildcards):
+    fn = "results/dedup/{}_merged_mtshft_mkdups.bam"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_wgs_metrics_ref(wildcards):
+    fn = "results/dedup/{}_merged_mtref_mkdups_wgs_metrics.txt"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_wgs_metrics_shft(wildcards):
+    fn = "results/dedup/{}_merged_mtshft_mkdups_wgs_metrics.txt"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_mutect_ref(wildcards):
+    fn = "results/variants/{}_merged_mtref_mkdups.vcf"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_mutect_shft(wildcards):
+    fn = "results/variants/{}_merged_mtshft_mkdups.vcf"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_bwa(wildcards):
     d = {
         "bam": all_bwa_bam(wildcards),
         "bai": all_bwa_bai(wildcards),
-        #"mt_unbam": all_prnrds_bam_output(wildcards),
-        #"mt_unbam_rev": all_revertsam_bam_output(wildcards),
-        #"mt_ref_bam": all_mitoaln_bam_ref(wildcards), 
-        #"mt_shft_bam": all_mitoaln_bam_shft(wildcards),
-        #"merged_mt_ref": all_merged_bam_ref(wildcards), 
-        #"merged_mt_shft": all_merged_bam_shft(wildcards) 
+        "mt_unbam": all_prnrds_bam_output(wildcards),
+        "mt_unbam_rev": all_revertsam_bam_output(wildcards),
+        "mt_ref_bam": all_mitoaln_bam_ref(wildcards), 
+        "mt_shft_bam": all_mitoaln_bam_shft(wildcards),
+        "merged_mt_ref": all_merged_bam_ref(wildcards), 
+        "merged_mt_shft": all_merged_bam_shft(wildcards),
+        "merged_mt_ref_mkdups": all_rdup_ref(wildcards),
+        "merged_mt_shft_mkdups": all_rdup_shft(wildcards)
+
     }
     return d
     
@@ -99,6 +131,16 @@ def all_qc(wildcards):
     """Collect all QC-related tasks"""
     d = {
         "fastqc_zip": all_qc_fastqc(wildcards),
+        "wgs_metrics_ref": all_wgs_metrics_ref(wildcards),
+        "wgs_metrics_shft": all_wgs_metrics_shft(wildcards)
+    }
+    return d
+
+def all_vcfs(wildcards):
+    """Collect all VCFs"""
+    d = {
+        "mutect_ref": all_mutect_ref(wildcards),
+        "mutect_shft": all_mutect_shft(wildcards)
     }
     return d
 
@@ -107,6 +149,7 @@ def all(wildcards):
     d = {}
     #d = {"map": all_map_input(wildcards)}
     d.update(**all_qc(wildcards))
-    d.update(**all_bam(wildcards))
-    #d.update(**all_samtofq_output(wildcards))
+    d.update(**all_bwa(wildcards))
+    d.update(**all_samtofq_output(wildcards))
+    d.update(**all_vcfs(wildcards))
     return d

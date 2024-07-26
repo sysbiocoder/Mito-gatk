@@ -1,11 +1,11 @@
 rule bwa_shftmtmerge:
     output:
-        out="result/align/{sample}_merged_mtshft.bam"
+        out="results/align/{sample}_merged_mtshft.bam"
     input:
         bam1="results/align/{sample}.mito.reverted.bam",
         bam2="results/align/{sample}_mt_shft.bam",
         fasta=config['mt_shft_ref']
-    container: config["picard"]["sif"]
+    container: config["picard"]["container"]
     log:
         "logs/{sample}_mt_shft_merge.log"
     shell:

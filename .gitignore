@@ -34,4 +34,5 @@ results
 results/
 singularity
 singularity/
-
+logs
+logs/

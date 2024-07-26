@@ -1,9 +1,9 @@
 rule dup_shft:
     output:
-        bam="result/dedup/{sample}_merged_mtshft_mkdups.bam",
-        metrics="result/dedup/{sample}_merged_mtshft_mkdups_metrics.txt"
+        bam="results/dedup/{sample}_merged_mtshft_mkdups.bam",
+        metrics="results/dedup/{sample}_merged_mtshft_mkdups_metrics.txt"
     input:
-        bam="result/align/{sample}_merged_mtshft.bam"
+        bam="results/align/{sample}_merged_mtshft.bam"
     log:
         "logs/{sample}.shft.mkdups.log"
     threads: config["picard"]["threads"]
