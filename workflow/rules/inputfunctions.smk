@@ -3,6 +3,7 @@
 #
 # Collection of helper functions for the workflow
 ##############################
+import glob
 
 def all_qc_fastqc(wildcards):
     """Generate list of all FastQC zip files"""
@@ -11,11 +12,13 @@ def all_qc_fastqc(wildcards):
     files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
     return files
 
-#def all_map_input(wildcards):
-#    """Pseudotarget that collects all merged bam files"""
-#    fn = "results/interim/map/bwa/{}.bam"
-#    bam = [fn.format(x) for x in samples.index]
-#    return bam    
+def all_map_index(wildcards):
+    """Pseudotarget that collects all BAM files with various extensions in align and dedup directories."""
+    
+    bam_files = glob.glob("results/align/*.bam") + glob.glob("results/dedup/*.bam")
+    bai_files = [bam + ".bai" for bam in bam_files]
+    
+    return bai_files
 
 
 # Function to retrieve read1 and read2 files for a sample
@@ -117,12 +120,12 @@ def all_bwa(wildcards):
         "bai": all_bwa_bai(wildcards),
         "mt_unbam": all_prnrds_bam_output(wildcards),
         "mt_unbam_rev": all_revertsam_bam_output(wildcards),
-        "mt_ref_bam": all_mitoaln_bam_ref(wildcards), 
-        "mt_shft_bam": all_mitoaln_bam_shft(wildcards),
-        "merged_mt_ref": all_merged_bam_ref(wildcards), 
-        "merged_mt_shft": all_merged_bam_shft(wildcards),
-        "merged_mt_ref_mkdups": all_rdup_ref(wildcards),
-        "merged_mt_shft_mkdups": all_rdup_shft(wildcards)
+        #"mt_ref_bam": all_mitoaln_bam_ref(wildcards), 
+        #"mt_shft_bam": all_mitoaln_bam_shft(wildcards),
+        #"merged_mt_ref": all_merged_bam_ref(wildcards), 
+        #"merged_mt_shft": all_merged_bam_shft(wildcards),
+        #"merged_mt_ref_mkdups": all_rdup_ref(wildcards),
+        #"merged_mt_shft_mkdups": all_rdup_shft(wildcards)
 
     }
     return d
@@ -147,9 +150,9 @@ def all_vcfs(wildcards):
 def all(wildcards):
     """Collect all tasks"""
     d = {}
-    #d = {"map": all_map_input(wildcards)}
-    d.update(**all_qc(wildcards))
+    d = {"idx": all_map_index(wildcards)}
+    #d.update(**all_qc(wildcards))
     d.update(**all_bwa(wildcards))
     d.update(**all_samtofq_output(wildcards))
-    d.update(**all_vcfs(wildcards))
+    #d.update(**all_vcfs(wildcards))
     return d

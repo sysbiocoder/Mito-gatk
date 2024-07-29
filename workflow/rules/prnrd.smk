@@ -7,8 +7,11 @@ rule prnrds:
         dict=config["dict"]
     log:
         "logs/align/{sample}.prnrd.log"
+    container: config["gatk"]["container"]
     params:
-        chrom=config["mt_chrom_name"],
-        spark_extra="--intervals {params.chrom} --read-filter MateOnSameContigOrNoMappedMateReadFilter --read-filter MateUnmappedAndUnmappedReadFilter" 
+        chrom=config["mt_chrom_name"]
     threads: config["gatk"]["threads"]
-    wrapper: "v2.3.0/bio/gatk/printreadsspark"
+    shell: 
+        """
+        gatk PrintReads -L {params.chrom} --read-filter MateOnSameContigOrNoMappedMateReadFilter --read-filter MateUnmappedAndUnmappedReadFilter -I {input.bam} -O {output.bam}
+        """

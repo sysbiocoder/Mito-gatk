@@ -21,12 +21,12 @@ fastqc:
   threads: 8
 
 gatk:
-  container: "docker//:broadinstitute/gatk" 
+  container: "singularity/gatk.sif" 
   mem_mb: 1024
   threads: 32
 
 picard:
-  container: "docker//:broadinstitute/picard"
+  container: "singularity/picard.sif"
   mem_mb: 1024 
   threads: 32
 
