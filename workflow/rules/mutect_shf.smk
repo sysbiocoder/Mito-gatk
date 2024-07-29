@@ -1,21 +1,30 @@
 rule mutect_shft:
     input:
         fasta=config["mt_shft_ref"],
-        map="results/dedup/{sample}_merged_mtshft_mkdups.bam",
-        intervals=config["mt_shft_control_region"]
+        map="results/dedup/{sample}.merged.mtshft.mkdups.sorted.bam"
     output:
-        vcf="results/variants/{sample}_merged_mtshft_mkdups.vcf",
+        vcf="results/variants/{sample}.merged.mtshft.mkdups.vcf",
     message:
-        "Testing Mutect2 with {wildcards.sample}"
+        "Testing Mutect2 with {wildcards.sample} and shifted reference"
     threads: config["gatk"]["threads"]
     resources:
         mem_mb=config["gatk"]["mem_mb"],
+    container: config["gatk"]["container"]
     params:
-        extra="--mitochondria"
+        intervals=config["mt_shft_control_region"]
     log:
-        "logs/{sample}.mutect.shft.log",
-    wrapper:
-        "v3.13.8/bio/gatk/mutect"
+        "logs/align/{sample}.mutect.shft.log",
+    shell:
+        """
+        gatk Mutect2 \
+        -R {input.fasta} \
+        -L {params.intervals} \
+        --read-filter MateOnSameContigOrNoMappedMateReadFilter \
+        --read-filter MateUnmappedAndUnmappedReadFilter \
+        --mitochondria-mode \
+        --annotation StrandBiasBySample \
+        -I {input.map} -O {output.vcf}
+        """
 
 #rule mdup_shf:
 #        input:

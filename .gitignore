@@ -36,3 +36,5 @@ singularity
 singularity/
 logs
 logs/
+haplocheck
+haplocheck/

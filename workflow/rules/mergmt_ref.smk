@@ -1,16 +1,16 @@
 rule bwa_refmtmerge:
     output:
-        out="results/align/{sample}_merged_mtref.bam"
+        out="results/align/{sample}.merged.mtref.bam"
     input:
         bam1="results/align/{sample}.mito.reverted.bam",
-        bam2="results/align/{sample}_mt_ref.bam",
+        bam2="results/align/{sample}.mt.ref.bam",
         fasta=config['mt_ref']
     container: config["picard"]["container"]
     log:
-        "logs/{sample}_mt_ref_merge.log"
+        "logs/align/{sample}.mt.ref.merge.log"
     shell:
         """
-        picard MergeBamAlignment \
+        java -jar /usr/picard/picard.jar MergeBamAlignment \
             ALIGNED={input.bam2} \
             UNMAPPED={input.bam1} \
             O={output.out} \
@@ -20,4 +20,6 @@ rule bwa_refmtmerge:
             SORT_ORDER=queryname \
             INCLUDE_SECONDARY_ALIGNMENTS=false \
             PAIRED_RUN=false
+        
+        samtools sort -@ {threads} -o {output}
         """

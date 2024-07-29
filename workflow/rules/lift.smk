@@ -1,24 +1,24 @@
-rule liftmtshift:
+rule lift_mtshift:
     output:
-        merged="results/variants/{sample}_mtmerged_lift.vcf",
-        rejected="results/variants/{sample}_rejected_lift.vcf"
+        merged="results/variants/{sample}.merged.lift.vcf",
+        rejected="results/variants/{sample}.rejected.lift.vcf"
     input:
-        vcf="results/variants/{sample}_merged_mtshft_markdups.vcf"
+        vcf="results/variants/{sample}.merged.mtshft.mkdups.vcf",
         chain=config["mt_back_chain"],
         ref=config["mt_ref"]
     threads: config["picard"]["threads"]
-    resources: config["picard"]["mem_mb"]
+    resources: 
+        mem_mb=config["picard"]["mem_mb"]
     container: config["picard"]["container"]
-    params:
     shell:
-    """
-    picard LiftoverVcf \ 
-    I={input.vcf} \ 
-    O={output.merged} \
-    CHAIN={input.chain} \ 
-    REJECT={output.rejected} \ 
-    R={input.ref}'
-    """
+        """
+        java -jar /usr/picard/picard.jar LiftoverVcf\
+        I={input.vcf} \
+        O={output.merged} \
+        CHAIN={input.chain} \
+        REJECT={output.rejected} \
+        R={input.ref}
+        """
 
 #rule liftmtshift:
 #    input:

@@ -1,14 +1,14 @@
 rule dup_shft:
     output:
-        bam="results/dedup/{sample}_merged_mtshft_mkdups.bam",
-        metrics="results/dedup/{sample}_merged_mtshft_mkdups_metrics.txt"
+        bam="results/dedup/{sample}.merged.mtshft.mkdups.bam",
+        metrics="results/dedup/{sample}.merged.mtshft.mkdups.metrics.txt"
     input:
-        bam="results/align/{sample}_merged_mtshft.bam"
+        bams="results/align/{sample}.merged.mtshft.bam"
     log:
-        "logs/{sample}.shft.mkdups.log"
+        "logs/align/{sample}.shft.mkdups.log"
     threads: config["picard"]["threads"]
     params:
-        extra="--VALIDATION_STRINGENCY=SILENT --CREATE_INDEX=true --OPTICAL_DUPLICATE_PIXEL_DISTANCE=2500 --ASSUME_SORT_ORDER=queryname --CLEAR_DT=false --ADD_PG_TAG_TO_READS=false"
+        extra="--VALIDATION_STRINGENCY SILENT --CREATE_INDEX true --OPTICAL_DUPLICATE_PIXEL_DISTANCE 2500 --ASSUME_SORT_ORDER queryname --CLEAR_DT false --ADD_PG_TAG_TO_READS false"
     resources:
         mem_mb=config["picard"]["mem_mb"]
     wrapper:

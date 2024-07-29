@@ -11,6 +11,10 @@ rule all_qc:
     input:
         all_qc_fastqc
 
+rule all_idx: 
+   input: 
+        all_idx_samtools
+
 """
 rule all:
 	input:
@@ -48,17 +52,19 @@ include: "rules/revertsam.smk"
 include: "rules/samtofq.smk"
 include: "rules/mitoaln.smk"
 include: "rules/mitoaln_shft.smk"
-#include: "rules/mergmt_ref.smk"
-#include: "rules/mergmt_shft.smk"
-#include: "rules/rdup_ref.smk"
-#include: "rules/rdup_shf.smk"
-#include: "rules/collect_metrics_ref.smk"
-#include: "rules/collect_metrics_shft.smk"
-# include: "rules/haplo.smk"
-#include: "rules/mutek_ref.smk"
-#include: "rules/mutek_shf.smk"
-# include: "rules/lift.smk"
-# include: "rules/mergevcf.smk"
-# include: "rules/filter.smk"
-# include: "rules/blacklist.smk"
+include: "rules/mergmt_ref.smk"
+include: "rules/mergmt_shft.smk"
+include: "rules/rdup_ref.smk"
+include: "rules/rdup_shf.smk"
+include: "rules/sort_ref.smk"
+include: "rules/sort_shft.smk"
+include: "rules/collect_metrics_ref.smk"
+include: "rules/collect_metrics_shft.smk"
+include: "rules/mutect_ref.smk"
+include: "rules/mutect_shf.smk"
+include: "rules/haplo.smk"
+include: "rules/lift.smk"
+include: "rules/mergevcf.smk"
+include: "rules/filter.smk"
+include: "rules/variant_filtration.smk"
 # include: "rules/annot.smk"
