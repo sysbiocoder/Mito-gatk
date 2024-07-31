@@ -1,6 +1,6 @@
 rule merge_mtshift_ref:
     output:
-        "results/variants/{sample}.merged.combined.vcf"
+        vcf="results/variants/{sample}.merged.combined.vcf"
     input:
         vcfs=["results/variants/{sample}.merged.mtref.mkdups.vcf","results/variants/{sample}.merged.lift.vcf"]
     threads:

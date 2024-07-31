@@ -15,5 +15,5 @@ rule collect_wgs_metrics_ref:
         java -jar /usr/picard/picard.jar CollectWgsMetrics \
             I={input.bam} \
             O={output.metrics} \
-            R={input.fasta} \
+            R={input.fasta} 2> {log}
         """

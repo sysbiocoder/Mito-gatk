@@ -3,6 +3,7 @@
 #
 # Collection of helper functions for the workflow
 ##############################
+
 import glob
 
 def all_qc_fastqc(wildcards):
@@ -12,12 +13,41 @@ def all_qc_fastqc(wildcards):
     files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
     return files
 
+def split_sample_ext(filename):
+    """Splits the filename into sample and ext."""
+    base_name = os.path.basename(filename)
+    # Remove the '.bam' extension
+    base_name_without_ext = base_name[:-4]
+    # Split on the first dot
+    parts = base_name_without_ext.split('.', 1)
+    if len(parts) == 2:
+        sample, ext = parts
+    else:
+        sample = parts[0]
+        ext = ''
+    return sample, ext
+
 def all_idx_samtools(wildcards):
-    """Pseudotarget that collects all BAM files with various extensions in align and dedup directories."""
+    """Collect all BAM files and generate corresponding BAI files, excluding certain extensions."""
     
-    excluded_extensions = ['.merged.mtref.bam', '.merged.mtshft.bam', '.merged.mtref.mkdups.bam', '.merged.mtshft.mkdups.bam']
+    excluded_extensions = {
+        '.merged.mtref.bam', 
+        '.merged.mtshft.bam', 
+        '.merged.mtref.mkdups.bam', 
+        '.merged.mtshft.mkdups.bam'
+    }
+    
+    # Find all BAM files in the specified directories
     bam_files = glob.glob("results/align/*.bam") + glob.glob("results/dedup/*.bam")
-    bai_files = [bam + ".bai" for bam in bam_files if not any(bam.endswith(ext) for ext in excluded_extensions)]
+    
+    # Filter out excluded BAM files
+    filtered_bam_files = [bam for bam in bam_files if not any(bam.endswith(ext) for ext in excluded_extensions)]
+    
+    # Generate BAI file paths with split sample and ext
+    bai_files = []
+    for bam in filtered_bam_files:
+        sample, ext = split_sample_ext(bam)
+        bai_files.append(f"{os.path.dirname(bam)}/{sample}.{ext}.bam.bai")
     
     return bai_files
 
@@ -71,12 +101,6 @@ def all_merged_bam_shft(wildcards):
     fn = "results/align/{}.merged.mtshft.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
-
-def bwa_mem_index_input_ext(wildcards):
-    """Retrieve bwa mem index with extensions"""
-    return expand(
-        "{index}{ext}", index=config["ref"], ext=[".amb", ".ann", ".bwt", ".pac", ".sa"]
-    )
 
 def all_samtofq_output(wildcards):
     base_fn = "results/align/{}.mito.reverted_{}.fq"
@@ -155,7 +179,13 @@ def all_vcf_excluderanges(wildcards):
     files = [fn.format(sample) for sample in reads.index]
     return files
 
+def all_anno_vcf(wildcards): 
+    fn="results/variants/{}.annotated.vcf"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
 def all_bwa(wildcards):
+    """Collect all mapping-related tasks"""
     d = {
         "bam": all_bwa_bam(wildcards),
         "bai": all_bwa_bai(wildcards),
@@ -191,10 +221,12 @@ def all_vcfs(wildcards):
         "lifted_shft": all_lift_vcf(wildcards),
         "merged_vcf": all_merged_vcf(wildcards),
         "merged_vcf_stat": all_merged_vcf_stat(wildcards),
-        "all_merged_vcf_filtered": all_merged_vcf_filtered(wildcards),
-        "all_merged_vcf_filtered_excluderanges": all_vcf_excluderanges(wildcards)
+        "merged_vcf_filtered": all_merged_vcf_filtered(wildcards),
+        "merged_vcf_filtered_excluderanges": all_vcf_excluderanges(wildcards),
+        #"annotated_vcf": all_anno_vcf(wildcards)
     }
     return d
+
 def all_idx(wildcards): 
     d = {
         "samtools_idx": all_idx_samtools(wildcards)

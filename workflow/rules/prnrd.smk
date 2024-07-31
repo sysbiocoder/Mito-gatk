@@ -13,5 +13,10 @@ rule prnrds:
     threads: config["gatk"]["threads"]
     shell: 
         """
-        gatk PrintReads -L {params.chrom} --read-filter MateOnSameContigOrNoMappedMateReadFilter --read-filter MateUnmappedAndUnmappedReadFilter -I {input.bam} -O {output.bam}
+        gatk PrintReads \
+        -L {params.chrom} \
+        --read-filter MateOnSameContigOrNoMappedMateReadFilter \
+        --read-filter MateUnmappedAndUnmappedReadFilter \
+        -I {input.bam} \
+        -O {output.bam} 2> {log}
         """

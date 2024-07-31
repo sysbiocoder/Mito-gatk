@@ -5,7 +5,6 @@ rule all:
     input:
         unpack(all)
 
-
 # Pseudo-target using expand
 rule all_qc:
     input:
@@ -14,35 +13,6 @@ rule all_qc:
 rule all_idx: 
    input: 
         all_idx_samtools
-
-"""
-rule all:
-	input:
-		[config['outdir']+'/align/{sample}.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}.sorted.bam.bai'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}.mito.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}.mito.reverted.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}.mito.reverted_1.fq'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}.mito.reverted_2.fq'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mt_ref.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mt_shift.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_merged_mtref.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_merged_mtshft.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mtmerged_refdup.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mtmerged_refdup_met.txt'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mtmerged_shftdup.bam'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/align/{sample}_mtmerged_shftdup_met.txt'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/haplo/{sample}/contamination/contamination.txt'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/haplo/{sample}/report/report.html'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_ref.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_shft.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_lift.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_rejected_lift.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_combined.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_filtered.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_filtered_brm.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-		[config['outdir']+'/variants/{sample}_mtmerged_combined_brm_annotated.vcf'.format(sample=sample_id) for sample_id in sample_ids]
-"""
 
 include: "rules/qc.smk"
 include: "rules/align.smk"
@@ -67,4 +37,4 @@ include: "rules/lift.smk"
 include: "rules/mergevcf.smk"
 include: "rules/filter.smk"
 include: "rules/variant_filtration.smk"
-# include: "rules/annot.smk"
+#include: "rules/annot.smk"

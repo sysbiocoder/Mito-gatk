@@ -1,6 +1,6 @@
 rule samtools_index:
     input:
-        bam = "{path}/{sample}.{ext}.bam"
+        bam = lambda wildcards: expand("{path}/{sample}.{ext}.bam", path=wildcards.path, sample=wildcards.sample, ext=wildcards.ext)
     output:
         bai = "{path}/{sample}.{ext}.bam.bai"
     log:
