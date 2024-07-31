@@ -1,4 +1,3 @@
-
 rule bwa_mem:
     output:
         bam="results/align/{sample}.sorted.bam"

@@ -13,64 +13,25 @@ def all_qc_fastqc(wildcards):
     files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
     return files
 
-def split_sample_ext(filename):
-    """Splits the filename into sample and ext."""
-    base_name = os.path.basename(filename)
-    # Remove the '.bam' extension
-    base_name_without_ext = base_name[:-4]
-    # Split on the first dot
-    parts = base_name_without_ext.split('.', 1)
-    if len(parts) == 2:
-        sample, ext = parts
-    else:
-        sample = parts[0]
-        ext = ''
-    return sample, ext
-
-def all_idx_samtools(wildcards):
-    """Collect all BAM files and generate corresponding BAI files, excluding certain extensions."""
-    
-    excluded_extensions = {
-        '.merged.mtref.bam', 
-        '.merged.mtshft.bam', 
-        '.merged.mtref.mkdups.bam', 
-        '.merged.mtshft.mkdups.bam'
-    }
-    
-    # Find all BAM files in the specified directories
-    bam_files = glob.glob("results/align/*.bam") + glob.glob("results/dedup/*.bam")
-    
-    # Filter out excluded BAM files
-    filtered_bam_files = [bam for bam in bam_files if not any(bam.endswith(ext) for ext in excluded_extensions)]
-    
-    # Generate BAI file paths with split sample and ext
-    bai_files = []
-    for bam in filtered_bam_files:
-        sample, ext = split_sample_ext(bam)
-        bai_files.append(f"{os.path.dirname(bam)}/{sample}.{ext}.bam.bai")
-    
-    return bai_files
-
-
-# Function to retrieve read1 and read2 files for a sample
 def get_reads(wildcards):
     read1 = reads.loc[wildcards.sample].query("id == 1")["reads"].values[0]
     read2 = reads.loc[wildcards.sample].query("id == 2")["reads"].values[0]
     return [read1, read2]
 
-# Function to generate list of all output BAM files
 def all_bwa_bam(wildcards):
     fn = "results/align/{}.sorted.bam"
     files = [fn.format(sample) for sample in reads.index]
     #files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
     return files
 
-# Function to generate list of all output BAM index files
 def all_bwa_bai(wildcards):
-    fn = "results/align/{}.sorted.bam.bai"
-    files = [fn.format(sample) for sample in reads.index]
-    #files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
-    return files
+    """Retrieve all index files (.bai) for BAM files with multiple extensions."""
+    extensions = [".mito.reverted", ".mito.sorted", ".mt.ref", ".mt.shft", ".sorted"]
+    return [
+        f"results/align/{sample}{ext}.bam.bai"
+        for sample in reads.index
+        for ext in extensions
+    ]
 
 def all_prnrds_bam_output(wildcards):
     fn = "results/align/{}.mito.sorted.bam"
@@ -128,6 +89,14 @@ def all_rdup_shft_sort(wildcards):
     fn = "results/dedup/{}.merged.mtshft.mkdups.sorted.bam"
     files = [fn.format(sample) for sample in reads.index]
     return files
+
+def all_rdup_bai(wildcards):
+    extensions = [".merged.mtref.mkdups.sorted", ".merged.mtshft.mkdups.sorted"]
+    return [
+        f"results/dedup/{sample}{ext}.bam.bai"
+        for sample in reads.index
+        for ext in extensions
+    ]
 
 def all_wgs_metrics_ref(wildcards):
     fn = "results/dedup/{}.merged.mtref.mkdups.wgs.metrics.txt"
@@ -198,7 +167,8 @@ def all_bwa(wildcards):
         "merged_mt_ref_mkdups": all_rdup_ref(wildcards),
         "merged_mt_shft_mkdups": all_rdup_shft(wildcards),
         "merged_mt_ref_mkdups_sorted": all_rdup_ref_sort(wildcards), 
-        "merged_mt_shft_mkdups_sorted": all_rdup_shft_sort(wildcards)
+        "merged_mt_shft_mkdups_sorted": all_rdup_shft_sort(wildcards),
+        "merged_mt_mkdups_bai": all_rdup_bai(wildcards)
 
     }
     return d
@@ -227,18 +197,11 @@ def all_vcfs(wildcards):
     }
     return d
 
-def all_idx(wildcards): 
-    d = {
-        "samtools_idx": all_idx_samtools(wildcards)
-    }
-    return d
-
 def all(wildcards):
     """Collect all tasks"""
     d = {}
     d.update(**all_qc(wildcards))
     d.update(**all_bwa(wildcards))
-    d.update(**all_idx(wildcards))
     d.update(**all_samtofq_output(wildcards))
     d.update(**all_vcfs(wildcards))
     return d

@@ -10,10 +10,6 @@ rule all_qc:
     input:
         all_qc_fastqc
 
-rule all_idx: 
-   input: 
-        all_idx_samtools
-
 include: "rules/qc.smk"
 include: "rules/align.smk"
 include: "rules/index.smk"

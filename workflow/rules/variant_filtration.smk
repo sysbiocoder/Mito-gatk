@@ -1,4 +1,4 @@
-rule filter_variants:
+rule variant_filtration:
     output:
         "results/variants/{sample}.merged.combined.filtered.excluded.vcf"
     input:

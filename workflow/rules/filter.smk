@@ -1,4 +1,4 @@
-rule filter_vcf:
+rule filter_mutect_calls:
     input:
         vcf="results/variants/{sample}.merged.combined.vcf",
         ref=config["mt_ref"],
