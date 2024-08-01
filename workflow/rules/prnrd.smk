@@ -3,6 +3,7 @@ rule prnrds:
         bam="results/align/{sample}.mito.sorted.bam" 
     input:
         bam="results/align/{sample}.sorted.bam",
+        bai="results/align/{sample}.sorted.bam.bai",
         ref=config["ref"],
         dict=config["dict"]
     log:
