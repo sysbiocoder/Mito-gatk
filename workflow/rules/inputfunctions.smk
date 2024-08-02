@@ -149,7 +149,7 @@ def all_vcf_excluderanges(wildcards):
     return files
 
 def all_anno_vcf(wildcards): 
-    fn="results/variants/{}.annotated.vcf"
+    fn="{}.filtered.annotated.vcf"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
@@ -193,7 +193,14 @@ def all_vcfs(wildcards):
         "merged_vcf_stat": all_merged_vcf_stat(wildcards),
         "merged_vcf_filtered": all_merged_vcf_filtered(wildcards),
         "merged_vcf_filtered_excluderanges": all_vcf_excluderanges(wildcards),
-        #"annotated_vcf": all_anno_vcf(wildcards)
+        "annotated_vcf": all_anno_vcf(wildcards)
+    }
+    return d
+    
+def anno_resources(): 
+    d = {
+        #"plugins": "resources/vep/plugins", 
+        "cache": "resources/vep/cache"
     }
     return d
 
@@ -204,4 +211,5 @@ def all(wildcards):
     d.update(**all_bwa(wildcards))
     d.update(**all_samtofq_output(wildcards))
     d.update(**all_vcfs(wildcards))
+    d.update(**anno_resources())
     return d

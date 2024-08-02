@@ -1,33 +1,20 @@
-
-"""
-rule snpeff_download:
-    output:
-        config["snpeff"]["db"]
-    log:
-        "logs/snpeff/download.log"
-    params:
-        reference=config["snpeff"]["ref"]
-    resources:
-        mem_mb=config["snpeff"]["mem_mb_download"]
-    wrapper:
-        "v3.13.8/bio/variants/download"
-
-
-rule snpeff_annotate:
+rule annotate_variants:
     input:
-        calls="results/variants/{sample}.merged.combined.filtered.excluded.vcf", 
-        db=config["snpeff"]["db"] 
+        calls="results/variants/{sample}.merged.combined.filtered.excluded.vcf",  # .vcf, .vcf.gz or .bcf
+        #cache="resources/vep/cache",  # can be omitted if fasta and gff are specified
     output:
-        calls="results/variants/{sample}.annotated.vcf",   # annotated calls (vcf, bcf, or vcf.gz)
-        stats="results/variants/{sample}.annotated.html",  # summary statistics (in HTML), optional
-        csvstats="results/variants/{sample}.annotated.csv" # summary statistics in CSV, optional
+        calls="{sample}.filtered.annotated.vcf",  # .vcf, .vcf.gz or .bcf
     log:
-        "logs/variants/{sample}.annotate.log"
-    resources:
-        java_opts=config["snpeff"]["java_opts"],
-        mem_mb=config["snpeff"]["mem_mb_anno"]
-    wrapper:
-        "v3.13.8/bio/snpeff/annotate"
-"""
-
-
+        "logs/vep/{sample}.annotate.log"
+    threads:
+        config["vep"]["threads"]
+    container: config["vep"]["container"]
+    shell:
+        """
+            vep \
+            --dir_cache /opt/vep/.vep \
+            -i {input.calls} \
+            -o {output.calls} \
+            --offline --species mus_musculus \
+            --assembly GRCm39 --cache
+        """

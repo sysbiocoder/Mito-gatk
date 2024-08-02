@@ -40,14 +40,9 @@ picard:
   mem_mb: 1024 
   threads: 32
 
-samtools: 
+samtools:
   threads: 8
 
-snpeff:
-  db: "resources/snpeff/mm39" 
-  ref: "mm39"
-  java_opts: "-XX:ParallelGCThreads=10"
-  mem_mb_anno: 4096 
-  mem_mb_download: 1024
+vep:
+  container: "singularity/vep.sif"
   threads: 4
-

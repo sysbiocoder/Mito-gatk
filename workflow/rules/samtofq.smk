@@ -4,7 +4,7 @@ rule revertfq:
         fastq2="results/align/{sample}.mito.reverted_2.fq"
     input:
         bam="results/align/{sample}.mito.reverted.bam"
-    log: "logs/{sample}.revertfq.log"
+    log: "logs/align/{sample}.revertfq.log"
     threads: config["picard"]["threads"]
     resources: 
         mem_mb=config["picard"]["mem_mb"]
