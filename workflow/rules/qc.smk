@@ -2,15 +2,13 @@
 rule qc_fastqc:
     output:
         html="results/qc/fastqc/{read}_fastqc.html",
-        zip="results/qc/fastqc/{read}_fastqc.zip"
+        zip="results/qc/fastqc/{read}_fastqc.zip",
     input:
-        ".test/data/raw/{read}.fastq.gz"
-    threads: 
-        config["fastqc"]["threads"]
-    log: 
-        "logs/qc/{read}.fastqc.log"
-    resources: 
-        mem_mb=config["fastqc"]["mem_mb"]
+        ".test/data/raw/{read}.fastq.gz",
+    threads: config["fastqc"]["threads"]
+    log:
+        "logs/qc/{read}.fastqc.log",
+    resources:
+        mem_mb=config["fastqc"]["mem_mb"],
     wrapper:
         "v3.13.8/bio/fastqc"
-    

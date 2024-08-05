@@ -1,11 +1,11 @@
 rule bwa_mem:
     output:
-        bam="results/align/{sample}.sorted.bam"
+        bam="results/align/{sample}.sorted.bam",
     input:
         idx=config["ref"],
-        reads=lambda wildcards: get_reads(wildcards)
+        reads=lambda wildcards: get_reads(wildcards),
     log:
-        "logs/align/{sample}.log"   
+        "logs/align/{sample}.log",
     threads: config["bwa"]["threads"]
     params:
         extra=r"-R '@RG\tID:{sample}\tSM:{sample}'",

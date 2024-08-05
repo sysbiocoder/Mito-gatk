@@ -1,21 +1,22 @@
 rule mutect_ref:
     output:
         vcf="results/variants/{sample}.merged.mtref.mkdups.vcf",
-        stats="results/variants/{sample}.merged.mtref.mkdups.vcf.stats"
+        stats="results/variants/{sample}.merged.mtref.mkdups.vcf.stats",
     input:
         fasta=config["mt_ref"],
-        map="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam"
+        map="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam",
     message:
         "Testing Mutect2 with {wildcards.sample}"
     threads: config["gatk"]["threads"]
     resources:
         mem_mb=config["gatk"]["mem_mb"],
-    container: config["gatk"]["container"]
+    container:
+        config["gatk"]["container"]
     params:
-        intervals=config["mt_non_control_region"]
+        intervals=config["mt_non_control_region"],
     log:
         "logs/align/{sample}.mutect.ref.log",
-    shell: 
+    shell:
         """
         gatk Mutect2 \
         -R {input.fasta} \

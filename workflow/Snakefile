@@ -1,14 +1,17 @@
 include: "rules/common.smk"
 include: "rules/inputfunctions.smk"
 
+
 rule all:
     input:
-        unpack(all)
+        unpack(all),
+
 
 # Pseudo-target using expand
 rule all_qc:
     input:
-        all_qc_fastqc
+        all_qc_fastqc,
+
 
 include: "rules/qc.smk"
 include: "rules/align.smk"

@@ -1,13 +1,14 @@
 rule bwa_refmtmerge:
     output:
-        out="results/align/{sample}.merged.mtref.bam"
+        out="results/align/{sample}.merged.mtref.bam",
     input:
         bam1="results/align/{sample}.mito.reverted.bam",
         bam2="results/align/{sample}.mt.ref.bam",
-        fasta=config['mt_ref']
-    container: config["picard"]["container"]
+        fasta=config["mt_ref"],
+    container:
+        config["picard"]["container"]
     log:
-        "logs/align/{sample}.mt.ref.merge.log"
+        "logs/align/{sample}.mt.ref.merge.log",
     shell:
         """
         java -jar /usr/picard/picard.jar MergeBamAlignment \

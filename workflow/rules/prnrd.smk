@@ -1,18 +1,19 @@
 rule prnrds:
     output:
-        bam="results/align/{sample}.mito.sorted.bam" 
+        bam="results/align/{sample}.mito.sorted.bam",
     input:
         bam="results/align/{sample}.sorted.bam",
         bai="results/align/{sample}.sorted.bam.bai",
         ref=config["ref"],
-        dict=config["dict"]
+        dict=config["dict"],
     log:
-        "logs/align/{sample}.prnrd.log"
-    container: config["gatk"]["container"]
+        "logs/align/{sample}.prnrd.log",
+    container:
+        config["gatk"]["container"]
     params:
-        chrom=config["mt_chrom_name"]
+        chrom=config["mt_chrom_name"],
     threads: config["gatk"]["threads"]
-    shell: 
+    shell:
         """
         gatk PrintReads \
         -L {params.chrom} \
