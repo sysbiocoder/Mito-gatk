@@ -9,6 +9,8 @@ rule lift_mtshift:
     threads: config["picard"]["threads"]
     resources: 
         mem_mb=config["picard"]["mem_mb"]
+    log: 
+        "logs/picard/{sample}.liftover.log"
     container: config["picard"]["container"]
     shell:
         """

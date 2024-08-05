@@ -8,6 +8,8 @@ rule variant_filtration:
         config["gatk"]["container"]
     threads: 
         config["gatk"]["threads"]
+    log: 
+        "logs/gatk/{sample}.variantfilt.log"
     resources:
         mem_mb=config["gatk"]["mem_mb"]
     shell: 
