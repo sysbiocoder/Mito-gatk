@@ -1,8 +1,0 @@
-name: picard-env
-channels:
-  - bioconda
-  - conda-forge
-dependencies:
-  - picard
-  - samtools
-  - openjdk
