@@ -1,9 +1,9 @@
 rule bwa_refmt:
+    output:
+        out="results/align/{sample}.mt.ref.bam"
     input:
         idx=config["mt_ref"],
         reads=["results/align/{sample}.mito.reverted_1.fq","results/align/{sample}.mito.reverted_2.fq"]
-    output:
-        out="results/align/{sample}.mt.ref.bam"
     log:
         "logs/align/{sample}.mt.ref.log"
     threads: config["bwa"]["threads"]

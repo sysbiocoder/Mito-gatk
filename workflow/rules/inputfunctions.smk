@@ -4,8 +4,6 @@
 # Collection of helper functions for the workflow
 ##############################
 
-import glob
-
 def all_qc_fastqc(wildcards):
     """Generate list of all FastQC zip files"""
     fn = "results/qc/fastqc/{}_fastqc.zip"

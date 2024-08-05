@@ -1,10 +1,10 @@
 rule mutect_shft:
-    input:
-        fasta=config["mt_shft_ref"],
-        map="results/dedup/{sample}.merged.mtshft.mkdups.sorted.bam"
     output:
         vcf="results/variants/{sample}.merged.mtshft.mkdups.vcf",
         stats="results/variants/{sample}.merged.mtshft.mkdups.vcf.stats"
+    input:
+        fasta=config["mt_shft_ref"],
+        map="results/dedup/{sample}.merged.mtshft.mkdups.sorted.bam"
     message:
         "Testing Mutect2 with {wildcards.sample} and shifted reference"
     threads: config["gatk"]["threads"]
@@ -24,6 +24,6 @@ rule mutect_shft:
         --read-filter MateUnmappedAndUnmappedReadFilter \
         --mitochondria-mode \
         --annotation StrandBiasBySample \
-        -I {input.map} -O {output.vcf} 2> {log}
+        -I {input.map} -O {output.vcf}
         """
 

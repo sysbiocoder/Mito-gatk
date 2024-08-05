@@ -1,9 +1,8 @@
 rule annotate_variants:
-    input:
-        calls="results/variants/{sample}.merged.combined.filtered.excluded.vcf",  # .vcf, .vcf.gz or .bcf
-        #cache="resources/vep/cache",  # can be omitted if fasta and gff are specified
     output:
         calls="{sample}.filtered.annotated.vcf",  # .vcf, .vcf.gz or .bcf
+    input:
+        calls="results/variants/{sample}.merged.combined.filtered.excluded.vcf",  # .vcf, .vcf.gz or .bcf
     log:
         "logs/vep/{sample}.annotate.log"
     threads:

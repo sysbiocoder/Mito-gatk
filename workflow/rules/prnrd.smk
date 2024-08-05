@@ -19,5 +19,5 @@ rule prnrds:
         --read-filter MateOnSameContigOrNoMappedMateReadFilter \
         --read-filter MateUnmappedAndUnmappedReadFilter \
         -I {input.bam} \
-        -O {output.bam} 2> {log}
+        -O {output.bam}
         """

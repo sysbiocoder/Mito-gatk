@@ -1,10 +1,10 @@
 rule mutect_ref:
-    input:
-        fasta=config["mt_ref"],
-        map="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam"
     output:
         vcf="results/variants/{sample}.merged.mtref.mkdups.vcf",
         stats="results/variants/{sample}.merged.mtref.mkdups.vcf.stats"
+    input:
+        fasta=config["mt_ref"],
+        map="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam"
     message:
         "Testing Mutect2 with {wildcards.sample}"
     threads: config["gatk"]["threads"]
@@ -24,5 +24,5 @@ rule mutect_ref:
         --read-filter MateUnmappedAndUnmappedReadFilter \
         --mitochondria-mode \
         --annotation StrandBiasBySample \
-        -I {input.map} -O {output.vcf} 2> {log}
+        -I {input.map} -O {output.vcf}
         """

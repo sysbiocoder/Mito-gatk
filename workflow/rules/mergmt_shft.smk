@@ -19,5 +19,5 @@ rule bwa_shftmtmerge:
             MAX_GAPS=-1 \
             SORT_ORDER=queryname \
             INCLUDE_SECONDARY_ALIGNMENTS=false \
-            PAIRED_RUN=false 2> {log}
+            PAIRED_RUN=false
         """
