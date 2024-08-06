@@ -30,7 +30,7 @@ def all_bwa_bam(wildcards):
 
 
 def all_bwa_bai(wildcards):
-    """Retrieve all index files (.bai) for BAM files with multiple extensions."""
+    """Create all index files (.bai) for BAM files with multiple extensions."""
     extensions = [".mito.reverted", ".mito.sorted", ".mt.ref", ".mt.shft", ".sorted"]
     return [
         f"results/align/{sample}{ext}.bam.bai"
