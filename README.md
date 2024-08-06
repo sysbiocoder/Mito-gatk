@@ -28,10 +28,10 @@ wget https://github.com/genepi/haplocheck/releases/download/v1.3.2/haplocheck.zi
 unzip haplocheck.zip
 ```
 
-### Download VEP database
+### Download VEP database from Ensembl
 
-Download the needed VEP cache using the [Ensemble FTP](https://ftp.ensembl.org/pub/current_variation/indexed_vep_cache/) and store in a directory in `resources/vep/cache`. Keep the subdirectory structure as is. 
+Download the needed VEP cache using the [Ensembl FTP](https://ftp.ensembl.org/pub/current_variation/indexed_vep_cache/) and store in a directory in `resources/vep/cache`. Keep the subdirectory structure as is. 
 
-## Run the pipeline
+## Run the workflow
 
 `snakemake -s workflow/Snakefile --software-deployment-method conda apptainer`
