@@ -14,10 +14,10 @@ git checkout dev
 
 ### Create resources and singularity directories
 
-Run `mkdir resources` and copy/link the reference files
+Run `mkdir resources` and link the reference files
 
 
-Run `mkdir singularity` and copy the singularity image files for GATK, Picard and VEP.
+Run `mkdir singularity` and link the singularity containers for GATK, Picard and VEP.
 
 ### Download and install haplochecker
 
