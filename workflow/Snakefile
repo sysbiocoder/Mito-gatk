@@ -13,6 +13,13 @@ rule all_qc:
         all_qc_fastqc,
 
 
+# Select species-specific settings
+
+species_config = config["species"]
+
+# Merge species-specific settings into the main config dictionary
+config.update(species_config)
+
 include: "rules/qc.smk"
 include: "rules/align.smk"
 include: "rules/index.smk"
@@ -36,4 +43,4 @@ include: "rules/lift.smk"
 include: "rules/mergevcf.smk"
 include: "rules/filter.smk"
 include: "rules/variant_filtration.smk"
-include: "rules/annot.smk"
+#include: "rules/annot.smk"

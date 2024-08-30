@@ -4,7 +4,7 @@ rule qc_fastqc:
         html="results/qc/fastqc/{read}_fastqc.html",
         zip="results/qc/fastqc/{read}_fastqc.zip",
     input:
-        ".test/data/raw/{read}.fastq.gz",
+        "data/raw/{read}.fastq.gz",
     threads: config["fastqc"]["threads"]
     log:
         "logs/qc/{read}.fastqc.log",

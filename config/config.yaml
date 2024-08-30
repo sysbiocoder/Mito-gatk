@@ -1,9 +1,11 @@
 ### Sample maps ###
 reads: "config/reads.tsv"
 samples: "config/samples.tsv"
+species: "mouse" # Set as "mouse" or "human"
 
 ### Mouse - mm39 (GRCm39) ### 
 ref: "resources/mm39/GCF_000001635_27_GRCm39_genomic.fna"
+#ref: "resources/mm39/chrMT.fna"
 dict: "resources/mm39/GCF_000001635_27_GRCm39_genomic.dict"
 mt_chrom_name: "NC_005089.1"
 mt_ref: "resources/mm39/chrMT.fna"

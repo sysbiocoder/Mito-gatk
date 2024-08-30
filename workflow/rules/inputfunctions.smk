@@ -223,7 +223,7 @@ def all_vcfs(wildcards):
         "merged_vcf_stat": all_merged_vcf_stat(wildcards),
         "merged_vcf_filtered": all_merged_vcf_filtered(wildcards),
         "merged_vcf_filtered_excluderanges": all_vcf_excluderanges(wildcards),
-        "annotated_vcf": all_anno_vcf(wildcards),
+        #"annotated_vcf": all_anno_vcf(wildcards),
     }
     return d
 
@@ -231,7 +231,7 @@ def all_vcfs(wildcards):
 def anno_resources():
     d = {
         # "plugins": "resources/vep/plugins",
-        "cache": "resources/vep/cache"
+        # "cache": "resources/vep/cache"
     }
     return d
 

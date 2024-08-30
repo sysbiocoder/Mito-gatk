@@ -19,6 +19,7 @@ rule filter_mutect_calls:
         -R {input.ref} \
         -O {output} \
         --stats {input.stats} \
-        --max-alt-allele-count 4 \
-        --mitochondria-mode 2> {log}
+        --mitochondria-mode \
+        --min-allele-fraction 0.002 \
+        --min-reads-per-strand 2
         """

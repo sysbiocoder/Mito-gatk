@@ -5,6 +5,7 @@ rule mutect_ref:
     input:
         fasta=config["mt_ref"],
         map="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam",
+        idx="results/dedup/{sample}.merged.mtref.mkdups.sorted.bam.bai"
     message:
         "Testing Mutect2 with {wildcards.sample}"
     threads: config["gatk"]["threads"]
