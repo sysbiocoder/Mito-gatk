@@ -1,10 +1,24 @@
 rule prnrds:
-	input:
-		[config['outdir']+'/align/{sample}.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids] 
-	output:
-		[config['outdir']+'/align/{sample}.mito.sorted.bam'.format(sample=sample_id) for sample_id in sample_ids] 
-	run:
-		for i in range(cnt):
-			inp=input[i]
-			out=output[i]
-			shell("gatk PrintReads -L chrM --read-filter MateOnSameContigOrNoMappedMateReadFilter --read-filter MateUnmappedAndUnmappedReadFilter -I {inp} -O {out}")
+    output:
+        bam="results/align/{sample}.mito.sorted.bam",
+    input:
+        bam="results/align/{sample}.sorted.bam",
+        bai="results/align/{sample}.sorted.bam.bai",
+        ref=config["ref"],
+        dict=config["dict"],
+    log:
+        "logs/align/{sample}.prnrd.log",
+    container:
+        config["gatk"]["container"]
+    params:
+        chrom=config["mt_chrom_name"],
+    threads: config["gatk"]["threads"]
+    shell:
+        """
+        gatk PrintReads \
+        -L {params.chrom} \
+        --read-filter MateOnSameContigOrNoMappedMateReadFilter \
+        --read-filter MateUnmappedAndUnmappedReadFilter \
+        -I {input.bam} \
+        -O {output.bam}
+        """

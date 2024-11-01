@@ -1,0 +1,31 @@
+$schema: "http://json-schema.org/draft-07/schema#"
+
+description: >-
+  an entry in the sample sheet
+
+# columns that the config/reads.tsv file can have and which type they should be
+properties:
+  unit: 
+    type: string
+    description: Sequencing date and lane identifier
+  sample:
+    type: string
+    description: Sample name/identifier
+  reads:
+    type: string
+    description: Reads name/identifier
+  id:
+    type: integer
+    description: Read 1 and 2 identifier 
+  PU: 
+    type: string
+    description: Lane identifier    
+
+# columns that the config/reads.tsv file must have to pass schema validation
+required:
+  - unit 
+  - sample
+  - reads 
+  - id 
+  - PU
+

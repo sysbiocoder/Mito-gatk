@@ -1,23 +1,30 @@
-rule mergemtshiftref:
-    input:
-        inp1=[config['outdir']+'/variants/{sample}_mtmerged_lift.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-        inp2=[config['outdir']+'/variants/{sample}_mtmerged_ref.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-        inps1=[config['outdir']+'/variants/{sample}_mtmerged_shft.vcf.stats'.format(sample=sample_id) for sample_id in sample_ids],
-        inps2=[config['outdir']+'/variants/{sample}_mtmerged_ref.vcf.stats'.format(sample=sample_id) for sample_id in sample_ids]
-
+rule merge_mtshift_ref:
     output:
-        out=[config['outdir']+'/variants/{sample}_mtmerged_combined.vcf'.format(sample=sample_id) for sample_id in sample_ids],
-        stats=[config['outdir']+'/variants/{sample}_mtmerged_combined.vcf.stats'.format(sample=sample_id) for sample_id in sample_ids]
-    threads: 32
-    run:
-        for i in range(cnt):
-            input1=input.inp1[i]
-            input2=input.inp2[i]
-            st1=input.inps1[i]
-            st2=input.inps2[i]
-            outp=output.out[i]
-            stat=output.stats[i]
-            shell('picard MergeVcfs I={input1} I={input2} O={outp}')
-            shell('python scripts/combstats.py -r {st1} -s {st2} -o {stat} ' )
+        vcf="results/variants/{sample}.merged.combined.vcf",
+    input:
+        vcfs=[
+            "results/variants/{sample}.merged.mtref.mkdups.vcf",
+            "results/variants/{sample}.merged.lift.vcf",
+        ],
+    threads: config["picard"]["threads"]
+    resources:
+        mem_mb=config["picard"]["mem_mb"],
+    log:
+        "logs/picard/{sample}.mergevcfs.log",
+    wrapper:
+        "v3.13.8/bio/picard/mergevcfs"
 
 
+rule py_combine_stats:
+    output:
+        "results/variants/{sample}.merged.combined.vcf.stats",
+    input:
+        stat1="results/variants/{sample}.merged.mtref.mkdups.vcf.stats",
+        stat2="results/variants/{sample}.merged.mtshft.mkdups.vcf.stats",
+    threads: config["picard"]["threads"]
+    resources:
+        mem_mb=config["picard"]["mem_mb"],
+    log:
+        "logs/picard/{sample}.mergevcfs.log",
+    shell:
+        """ python workflow/scripts/combstats.py -r {input.stat1} -s {input.stat2} -o {output}  """
