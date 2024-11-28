@@ -10,6 +10,9 @@ rule filter_mutect_calls:
         "logs/gatk/{sample}.filter.vcf.log",
     resources:
         mem_mb=config["gatk"]["mem_mb"],
+    params:
+        min_AF=config["filter"]["minAF"],
+        min_reads_per_strand=config["filter"]["min_reads_per_strand"]
     container:
         config["gatk"]["container"]
     shell:
@@ -20,6 +23,6 @@ rule filter_mutect_calls:
         -O {output} \
         --stats {input.stats} \
         --mitochondria-mode \
-        --min-allele-fraction 0.002 \
-        --min-reads-per-strand 2
+        --min-allele-fraction {params.min_AF} \
+        --min-reads-per-strand {params.min_reads_per_strand}
         """

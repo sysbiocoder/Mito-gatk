@@ -25,7 +25,6 @@ def get_reads(wildcards):
 def all_bwa_bam(wildcards):
     fn = "results/align/{}.sorted.bam"
     files = [fn.format(sample) for sample in reads.index]
-    # files = [fn.format(os.path.basename(x).replace(".fastq.gz", "")) for x in reads.reads.values]
     return files
 
 
@@ -38,6 +37,27 @@ def all_bwa_bai(wildcards):
         for ext in extensions
     ]
 
+def all_bwa_unmapped_bam(wildcards):
+    fn = "results/align/{}.unmapped.bam"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_unmap_fq(wildcards):
+    return [
+        f"results/align/{sample}.unmapped.{ext}.fq"
+        for sample in reads.index
+        for ext in [1,2]
+    ]
+
+def all_unmapped_realigned_bam(wildcards):
+    fn = "results/align/{}.unmapped.realigned.sorted.bam"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
+
+def all_depth(wildcards):
+    fn = "results/align/{}.depth.txt"
+    files = [fn.format(sample) for sample in reads.index]
+    return files
 
 def all_prnrds_bam_output(wildcards):
     fn = "results/align/{}.mito.sorted.bam"
@@ -177,7 +197,7 @@ def all_vcf_excluderanges(wildcards):
 
 
 def all_anno_vcf(wildcards):
-    fn = "{}.filtered.annotated.vcf"
+    fn = "results/variants/{}.filtered.annotated.vcf"
     files = [fn.format(sample) for sample in reads.index]
     return files
 
@@ -187,6 +207,7 @@ def all_bwa(wildcards):
     d = {
         "bam": all_bwa_bam(wildcards),
         "bai": all_bwa_bai(wildcards),
+        #"unbam": all_bwa_unmapped_bam(wildcards),
         "mt_unbam": all_prnrds_bam_output(wildcards),
         "mt_unbam_rev": all_revertsam_bam_output(wildcards),
         "mt_ref_bam": all_mitoaln_bam_ref(wildcards),
@@ -198,7 +219,10 @@ def all_bwa(wildcards):
         "merged_mt_ref_mkdups_sorted": all_rdup_ref_sort(wildcards),
         "merged_mt_shft_mkdups_sorted": all_rdup_shft_sort(wildcards),
         "merged_mt_mkdups_bai": all_rdup_bai(wildcards),
-    }
+        "unmap_fq": all_unmap_fq(wildcards),
+        "unbam_realign": all_unmapped_realigned_bam(wildcards),
+        "dep": all_depth(wildcards)
+        }
     return d
 
 
@@ -230,8 +254,7 @@ def all_vcfs(wildcards):
 
 def anno_resources():
     d = {
-        # "plugins": "resources/vep/plugins",
-        # "cache": "resources/vep/cache"
+         "cache": "resources/vep/cache"
     }
     return d
 

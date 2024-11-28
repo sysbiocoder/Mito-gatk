@@ -1,6 +1,6 @@
 rule annotate_variants:
     output:
-        calls="{sample}.filtered.annotated.vcf",  # .vcf, .vcf.gz or .bcf
+        calls="results/variants/{sample}.filtered.annotated.vcf",  # .vcf, .vcf.gz or .bcf
     input:
         calls="results/variants/{sample}.merged.combined.filtered.excluded.vcf",  # .vcf, .vcf.gz or .bcf
     log:
@@ -14,6 +14,6 @@ rule annotate_variants:
             --dir_cache /opt/vep/.vep \
             -i {input.calls} \
             -o {output.calls} \
-            --offline --species mus_musculus \
-            --assembly GRCm39 --cache
+            --offline --pick --force_overwrite --species mus_musculus \
+            --assembly GRCm39 --cache 
         """

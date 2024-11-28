@@ -12,14 +12,6 @@ rule all_qc:
     input:
         all_qc_fastqc,
 
-
-# Select species-specific settings
-
-species_config = config["species"]
-
-# Merge species-specific settings into the main config dictionary
-config.update(species_config)
-
 include: "rules/qc.smk"
 include: "rules/align.smk"
 include: "rules/index.smk"
