@@ -1,6 +1,12 @@
 include: "rules/common.smk"
 include: "rules/inputfunctions.smk"
 
+configfile: "config/config.yaml"
+
+# Flatten species-specific references into the top-level config
+species = config["species"]
+for key, value in config["resources"][species].items():
+    config[key] = value
 
 rule all:
     input:

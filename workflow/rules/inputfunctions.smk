@@ -207,7 +207,23 @@ def all_bwa(wildcards):
     d = {
         "bam": all_bwa_bam(wildcards),
         "bai": all_bwa_bai(wildcards),
-        #"unbam": all_bwa_unmapped_bam(wildcards),
+        "mt_unbam": all_prnrds_bam_output(wildcards),
+        "mt_unbam_rev": all_revertsam_bam_output(wildcards),
+        "mt_ref_bam": all_mitoaln_bam_ref(wildcards),
+        "mt_shft_bam": all_mitoaln_bam_shft(wildcards),
+        "merged_mt_ref": all_merged_bam_ref(wildcards),
+        "merged_mt_shft": all_merged_bam_shft(wildcards),
+        "merged_mt_ref_mkdups": all_rdup_ref(wildcards),
+        "merged_mt_shft_mkdups": all_rdup_shft(wildcards),
+        "merged_mt_ref_mkdups_sorted": all_rdup_ref_sort(wildcards),
+        "merged_mt_shft_mkdups_sorted": all_rdup_shft_sort(wildcards),
+        "merged_mt_mkdups_bai": all_rdup_bai(wildcards),
+        }
+    if config["species"] == "mouse":
+        d = {
+        "bam": all_bwa_bam(wildcards),
+        "bai": all_bwa_bai(wildcards),
+        "unbam": all_bwa_unmapped_bam(wildcards),
         "mt_unbam": all_prnrds_bam_output(wildcards),
         "mt_unbam_rev": all_revertsam_bam_output(wildcards),
         "mt_ref_bam": all_mitoaln_bam_ref(wildcards),
@@ -223,6 +239,7 @@ def all_bwa(wildcards):
         "unbam_realign": all_unmapped_realigned_bam(wildcards),
         "dep": all_depth(wildcards)
         }
+
     return d
 
 
