@@ -1,9 +1,3 @@
 unit	sample	reads	id	PU
-SRR21601404	E-2843_Liver	data/raw/SRR21601404_1.fastq.gz	1	SUB12051683 
-SRR21601404	E-2843_Liver	data/raw/SRR21601404_2.fastq.gz	2	SUB12051683
-SRR21601420	E-2843_Liver_pcr	data/raw/SRR21601420_1.fastq.gz	1	SUB12051683
-SRR21601420	E-2843_Liver_pcr	data/raw/SRR21601420_2.fastq.gz	2	SUB12051683
-SRR21601450	T-2767_Liver_MT	data/raw/SRR21601450_1.fastq.gz	1	SUB12051683 
-SRR21601450	T-2767_Liver_MT	data/raw/SRR21601450_2.fastq.gz	2	SUB12051683
-#SRR21601416	T-2767_Liver_pcr	data/raw/SRR21601416_1.fastq.gz	1	SUB12051683 
-#SRR21601416	T-2767_Liver_pcr	data/raw/SRR21601416_2.fastq.gz	2	SUB12051683
+ENA_OW971636	BALB_cJ_v3_0.5percent_50M_reseq	data/raw/BALB_cJ_v3_novaseq_model_hetero_0.5_50M_reseq_R1.fastq.gz	1	OW971636
+ENA_OW971636	BALB_cJ_v3_0.5percent_50M_reseq	data/raw/BALB_cJ_v3_novaseq_model_hetero_0.5_50M_reseq_R2.fastq.gz	2	OW971636

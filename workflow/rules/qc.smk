@@ -1,10 +1,9 @@
-
 rule qc_fastqc:
     output:
         html="results/qc/fastqc/{read}_fastqc.html",
         zip="results/qc/fastqc/{read}_fastqc.zip",
     input:
-        "data/raw/{read}.fastq.gz",
+        lambda wildcards: f"{config['fastq_dir']}/{wildcards.read}.fastq.gz"
     threads: config["fastqc"]["threads"]
     log:
         "logs/qc/{read}.fastqc.log",

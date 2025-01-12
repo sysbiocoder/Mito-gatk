@@ -1,6 +1,12 @@
 include: "rules/common.smk"
 include: "rules/inputfunctions.smk"
 
+configfile: "config/config.yaml"
+
+# Flatten species-specific references into the top-level config
+species = config["species"]
+for key, value in config["resources"][species].items():
+    config[key] = value
 
 rule all:
     input:
@@ -11,14 +17,6 @@ rule all:
 rule all_qc:
     input:
         all_qc_fastqc,
-
-
-# Select species-specific settings
-
-species_config = config["species"]
-
-# Merge species-specific settings into the main config dictionary
-config.update(species_config)
 
 include: "rules/qc.smk"
 include: "rules/align.smk"

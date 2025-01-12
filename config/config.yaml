@@ -1,28 +1,36 @@
 ### Sample maps ###
-reads: "config/reads.tsv"
-samples: "config/samples.tsv"
-species: "mouse" # Set as "mouse" or "human"
+reads: "config/workshop_reads.tsv"
+samples: "config/workshop_samples.tsv"
+fastq_dir: "data/workshop_Jan_2025" # Should be "data/raw" by default
+species: "human" # Set to "mouse" or "human"
 
-### Mouse - mm39 (GRCm39) ### 
-ref: "resources/mm39/GCF_000001635_27_GRCm39_genomic.fna"
-#ref: "resources/mm39/chrMT.fna"
-dict: "resources/mm39/GCF_000001635_27_GRCm39_genomic.dict"
-mt_chrom_name: "NC_005089.1"
-mt_ref: "resources/mm39/chrMT.fna"
-mt_shft_ref: "resources/mm39/chrMT_shifted_8000bp.fna"
-mt_back_chain: "resources/mm39/chrMT_shifted_8000bp.back_chain"
-mt_shft_control_region: "resources/mm39/control_region_chrMT_shifted_8000bp.bed"
-mt_non_control_region: "resources/mm39/non_control_region_chrMT.bed"
+resources:
+  mouse:
+    ### Mouse - mm39 (GRCm39) ### 
+    ref: "resources/mm39/GCF_000001635_27_GRCm39_genomic.fna"
+    dict: "resources/mm39/GCF_000001635_27_GRCm39_genomic.dict"
+    mt_chrom_name: "NC_005089.1"
+    mt_ref: "resources/mm39/chrMT.fna"
+    mt_shft_ref: "resources/mm39/chrMT_shifted_8000bp.fna"
+    mt_back_chain: "resources/mm39/chrMT_shifted_8000bp.back_chain"
+    mt_shft_control_region: "resources/mm39/control_region_chrMT_shifted_8000bp.bed"
+    mt_non_control_region: "resources/mm39/non_control_region_chrMT.bed"
 
-### Human - hg38 (GRCh38) ###
-#ref:
-#dict:
-#mt_chrom_name:
-#mt_ref:
-#mt_shft_ref:
-#mt_back_chain:
-#mt_shft_control_region:
-#mt_non_control_region:
+  human:
+    ### Human - hg38 (GRCh38) ###
+    ref: "resources/hg38/GCF_000001405.40_GRCh38.p14_genomic.fna"
+    dict: "resources/hg38/GCF_000001405.40_GRCh38.p14_genomic.dict"
+    mt_chrom_name: "NC_012920.1"
+    mt_ref: "resources/hg38/chrMT.fna"
+    mt_shft_ref: "resources/hg38/chrMT_shifted_8000bp.fna"
+    mt_back_chain: "resources/hg38/chrMT_shifted_8000bp.back_chain"
+    mt_shft_control_region: "resources/hg38/control_region_shifted_8000bp_chrMT.bed"
+    mt_non_control_region: "resources/hg38/non_control_region_chrMT.bed"
+
+### Params Variant Calling ###
+filter:
+  minAF: 0.01
+  min_reads_per_strand: 2
 
 ### Tools ###
 bwa: 
@@ -36,6 +44,7 @@ gatk:
   container: "singularity/gatk.sif" 
   mem_mb: 4096
   threads: 32
+
 
 picard:
   container: "singularity/picard.sif"

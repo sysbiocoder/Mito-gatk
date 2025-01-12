@@ -11,4 +11,4 @@ rule revert:
     resources:
         mem_mb=config["picard"]["mem_mb"],
     wrapper:
-        "v3.13.8/bio/picard/revertsam"
+        "v4.7.2/bio/picard/revertsam"
