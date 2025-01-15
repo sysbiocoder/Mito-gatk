@@ -68,9 +68,9 @@ The most basic way to run the pipeline (in an interactive session for instance) 
 
 `snakemake -s workflow/Snakefile --software-deployment-method conda apptainer`
 
-To submit jobs to a cluster run it with the `--profile` flag. Download a profile from [Snakemake-Profiles](https://github.com/Snakemake-Profiles/sge) or configure one yourself in ~/.config/snakemake/<profile_name>. 
+To submit jobs to a cluster run it with the `--profile` flag. Download a profile from [Snakemake-Profiles](https://github.com/Snakemake-Profiles) or configure one yourself in `~/.config/snakemake/<profile_name>`. 
 
-A simple example, adding a file called `config.yaml` to ~/.config/snakemake/sge. It can look something like the file below.
+A simple example, adding a file called `config.yaml` to `~/.config/snakemake/sge`. It can look something like the file below.
 
 ```
 executor: "cluster-generic"
