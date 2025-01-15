@@ -1,6 +1,6 @@
 ### Sample maps ###
-reads: "config/WS_WT_reads.tsv"
-samples: "config/WS_WT_samples.tsv"
+reads: "config/reads.tsv"
+samples: "config/samples.tsv"
 fastq_dir: "data/raw" # Should be "data/raw" by default
 species: "human" # Set to "mouse" or "human"
 

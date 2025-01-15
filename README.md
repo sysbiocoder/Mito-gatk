@@ -64,7 +64,29 @@ unit	sample	reads	id	PU
 
 ## Run the workflow
 
+The most basic way to run the pipeline (in an interactive session for instance) is:
+
 `snakemake -s workflow/Snakefile --software-deployment-method conda apptainer`
+
+To submit jobs to a cluster run it with the `--profile` flag. Download a profile from [Snakemake-Profiles](https://github.com/Snakemake-Profiles/sge) or configure one yourself in ~/.config/snakemake/<profile_name>. 
+
+A simple example, adding a file called `config.yaml` to ~/.config/snakemake/sge. It can look something like the file below.
+
+```
+executor: "cluster-generic"
+cluster-generic-submit-cmd: "qsub -N {rule} -q <name>.q -pe mpi {threads} -V -cwd -o logs/{rule}.{jobid}.out -e logs/{rule}.{jobid}.err"
+jobs: 1000
+latency-wait: 60
+rerun-incomplete: true
+restart-times: 1
+```
+
+Then running the pipeline with:
+
+`snakemake -s workflow/Snakefile --software-deployment-method conda apptainer --profile sge`
+ 
+
+### Annotation
 
 OBS! (I will fix this) Currently the VEP container need to have two --bind arguments set when running the workflow, and therefore it can only be run separately after the other parts are done. Line 46 in `Snakefile` and line 226 in `inputfunctions.smk` need to be uncommented. Annotation with VEP can then be run with: 
  
