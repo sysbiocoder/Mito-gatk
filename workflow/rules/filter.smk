@@ -8,6 +8,7 @@ rule filter_mutect_calls:
         stats="results/variants/{sample}.merged.combined.vcf.stats",
     log:
         "logs/gatk/{sample}.filter.vcf.log",
+    threads: config["gatk"]["threads"]
     resources:
         mem_mb=config["gatk"]["mem_mb"],
     params:

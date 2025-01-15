@@ -1,7 +1,7 @@
 ### Sample maps ###
-reads: "config/workshop_reads.tsv"
-samples: "config/workshop_samples.tsv"
-fastq_dir: "data/workshop_Jan_2025" # Should be "data/raw" by default
+reads: "config/WS_WT_reads.tsv"
+samples: "config/WS_WT_samples.tsv"
+fastq_dir: "data/raw" # Should be "data/raw" by default
 species: "human" # Set to "mouse" or "human"
 
 resources:
@@ -34,7 +34,7 @@ filter:
 
 ### Tools ###
 bwa: 
-  threads: 40
+  threads: 24
 
 fastqc:
   mem_mb: 1024
@@ -43,13 +43,13 @@ fastqc:
 gatk:
   container: "singularity/gatk.sif" 
   mem_mb: 4096
-  threads: 32
+  threads: 24
 
 
 picard:
   container: "singularity/picard.sif"
   mem_mb: 1024 
-  threads: 32
+  threads: 24
 
 samtools:
   threads: 8

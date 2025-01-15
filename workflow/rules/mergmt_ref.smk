@@ -7,6 +7,9 @@ rule bwa_refmtmerge:
         fasta=config["mt_ref"],
     container:
         config["picard"]["container"]
+    threads: config["picard"]["threads"]
+    resources:
+        mem_mb=config["picard"]["mem_mb"],
     log:
         "logs/align/{sample}.mt.ref.merge.log",
     shell:

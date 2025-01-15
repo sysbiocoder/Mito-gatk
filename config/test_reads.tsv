@@ -1,3 +1,0 @@
-unit	sample	reads	id	PU
-ENA_OW971636	BALB_cJ_v3_0.5percent_50M_reseq	data/raw/BALB_cJ_v3_novaseq_model_hetero_0.5_50M_reseq_R1.fastq.gz	1	OW971636
-ENA_OW971636	BALB_cJ_v3_0.5percent_50M_reseq	data/raw/BALB_cJ_v3_novaseq_model_hetero_0.5_50M_reseq_R2.fastq.gz	2	OW971636

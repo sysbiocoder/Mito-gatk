@@ -7,6 +7,9 @@ rule bwa_shftmtmerge:
         fasta=config["mt_shft_ref"],
     container:
         config["picard"]["container"]
+    threads: config["picard"]["threads"]
+    resources:
+        mem_mb=config["picard"]["mem_mb"],
     log:
         "logs/align/{sample}.mt.shft.merge.log",
     shell:
